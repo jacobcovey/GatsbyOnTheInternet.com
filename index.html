@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>The Great Gatsby Web-book</title>
+    <link rel="icon" type="image/x-icon" href='https://alboe.io/pieces/gatsbyOnTheInternet/gatsbyOnTheInternet.svg'>
+    <meta
+      name='description'
+      content='A free, lightweight HTML version of the Great Gatsby by F. Scott Fitzgerald (Public Domain). PDF alternative'
+    >
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+
+    <script>
+      fetch('https://alboe.io/pieces/gatsbyOnTheInternet/gatsbyOnTheInternet.html', {cache: "force-cache"})
+        .then(r => r.text())
+        .then(t => {
+          let styleHtml = /<style.*?>([\s\S]*)<\/style>/.exec(t)[1];
+          let bodyHtml = /<body.*?>([\s\S]*)<\/body>/.exec(t)[1];
+          const styleEl = document.createElement('style');
+          document.head.appendChild(styleEl);
+          styleEl.type = 'text/css';
+          if (styleEl.styleSheet){
+            // This is required for IE8 and below.
+            styleEl.styleSheet.cssText = styleHtml;
+          } else {
+            styleEl.appendChild(document.createTextNode(styleHtml));
+          }
+
+          document.head.appendChild(styleEl);
+          document.body.innerHTML = bodyHtml;
+
+          const albScript = document.getElementById('alb1-script');
+          let newScript = document.createElement("script");
+          newScript.appendChild(document.createTextNode(albScript.innerHTML));
+          document.body.replaceChild(newScript, albScript);
+        })
+        .catch(console.error.bind(console));
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
